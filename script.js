@@ -192,7 +192,7 @@ No website could ever fully express how much someone can mean, but I hope this l
 
 Wishing you a beautiful Girlfriend's Day filled with happiness.
 
-With love,
+With love  .,
 ❤️`;
 
   let opened = false;
