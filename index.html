@@ -172,18 +172,18 @@ button{ font-family: inherit; border:none; background:none; cursor:pointer; }
 .flip-card-back{ transform: rotateY(180deg); background: rgba(183,110,121,.25); }
 .flip-card-back p{ font-size: .88rem; line-height:1.5; color: var(--ink); }
 
-.polaroid-row{ display:flex; flex-wrap:wrap; gap: 2rem; justify-content:center; max-width: 1000px; }
+.polaroid-row{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1000px; width:100%; }
 .polaroid{
   background: var(--white); padding: .8rem .8rem 1.4rem; border-radius: 4px;
   box-shadow: 0 14px 30px rgba(60,30,40,.2);
   transform: rotate(var(--tilt,0deg));
   transition: transform .35s var(--ease-bounce);
-  cursor: pointer; width: 200px;
+  cursor: pointer; width: 100%;
 }
-.polaroid:hover{ transform: rotate(0deg) scale(1.05); }
+.polaroid:hover{ transform: rotate(0deg) scale(1.05); z-index: 10; }
 .polaroid-photo{ width:100%; aspect-ratio: 1/1.05; border-radius:2px; overflow:hidden; background: linear-gradient(135deg,#f0d9dd,#e6c9d0); }
 .polaroid-photo img{ width:100%; height:100%; object-fit:cover; object-position:center; display:block; image-rendering:auto; }
-.polaroid figcaption{ text-align:center; font-family: var(--font-script-alt); font-size: 1.1rem; color: var(--rosegold-deep); margin-top:.6rem; }
+.polaroid figcaption{ text-align:center; font-family: var(--font-script-alt); font-size: 1rem; color: var(--rosegold-deep); margin-top:.6rem; }
 
 .lightbox{
   position: fixed; inset:0; z-index: 500; background: rgba(20,10,15,.85);
@@ -220,7 +220,36 @@ button{ font-family: inherit; border:none; background:none; cursor:pointer; }
   box-shadow: 0 6px 14px rgba(0,0,0,.4);
 }
 .tonearm.playing{ transform: rotate(5deg); }
-.player-controls{ display:flex; align-items:center; gap: 1rem; }
+
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin: 1rem auto 2rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  background: #000;
+}
+.video-container video {
+  width: 100%;
+  display: block;
+  border-radius: 16px;
+}
+.video-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 1.5rem 1.5rem;
+  background: linear-gradient(transparent, rgba(0,0,0,.7));
+  pointer-events: none;
+}
+.video-overlay * {
+  pointer-events: none;
+}
+
+.player-controls{ display:flex; align-items:center; gap: 1rem; flex-wrap: wrap; justify-content:center; }
 .player-btn{ width: 52px; height:52px; border-radius:50%; background: var(--rosegold); display:flex; align-items:center; justify-content:center; transition: transform .3s var(--ease-bounce); }
 .player-btn:hover{ transform: scale(1.08); }
 .player-btn svg{ width: 22px; height:22px; fill: var(--cream); }
@@ -303,12 +332,17 @@ button{ font-family: inherit; border:none; background:none; cursor:pointer; }
 
 @media (max-width: 640px){
   .cards-grid{ grid-template-columns: repeat(2, minmax(130px,1fr)); }
-  .polaroid{ width: 42vw; }
+  .polaroid-row{ grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+  .polaroid{ width: 100%; }
   .section{ padding: 5rem 1.2rem; }
   .envelope-letter{ top: 20%; }
   .envelope.open .envelope-letter{ transform: translateY(-65%); }
   .letter-paper{ max-height: 280px; padding: 1.2rem; }
   .letter-text{ font-size: .85rem; }
+}
+
+@media (max-width: 400px){
+  .polaroid-row{ grid-template-columns: 1fr 1fr; gap: 0.8rem; }
 }
 
 button:focus-visible, input:focus-visible{ outline: 2px solid var(--rosegold-deep); outline-offset: 3px; }
@@ -421,20 +455,44 @@ button:focus-visible, input:focus-visible{ outline: 2px solid var(--rosegold-dee
     <h2 class="section-title" data-reveal>Memory Gallery</h2>
     <p class="section-sub" data-reveal>click a photo to see it up close</p>
     <div class="polaroid-row">
+      <!-- Photo 1 -->
       <figure class="polaroid" data-reveal style="--tilt:-6deg">
         <div class="polaroid-photo"><img src="image1.jpeg" alt="A beautiful memory" loading="lazy"></div>
         <figcaption>A beautiful memory ❤️</figcaption>
       </figure>
+      <!-- Photo 2 -->
       <figure class="polaroid" data-reveal style="--tilt:4deg">
         <div class="polaroid-photo"><img src="image2.jpeg" alt="A beautiful memory" loading="lazy"></div>
         <figcaption>A beautiful memory ❤️</figcaption>
       </figure>
+      <!-- Photo 3 -->
       <figure class="polaroid" data-reveal style="--tilt:-3deg">
         <div class="polaroid-photo"><img src="image3.jpeg" alt="A beautiful memory" loading="lazy"></div>
         <figcaption>A beautiful memory ❤️</figcaption>
       </figure>
+      <!-- Photo 4 -->
       <figure class="polaroid" data-reveal style="--tilt:5deg">
         <div class="polaroid-photo"><img src="image4.jpeg" alt="A beautiful memory" loading="lazy"></div>
+        <figcaption>A beautiful memory ❤️</figcaption>
+      </figure>
+      <!-- Photo 5 -->
+      <figure class="polaroid" data-reveal style="--tilt:-4deg">
+        <div class="polaroid-photo"><img src="image5.jpeg" alt="A beautiful memory" loading="lazy"></div>
+        <figcaption>A beautiful memory ❤️</figcaption>
+      </figure>
+      <!-- Photo 6 -->
+      <figure class="polaroid" data-reveal style="--tilt:6deg">
+        <div class="polaroid-photo"><img src="image6.jpeg" alt="A beautiful memory" loading="lazy"></div>
+        <figcaption>A beautiful memory ❤️</figcaption>
+      </figure>
+      <!-- Photo 7 -->
+      <figure class="polaroid" data-reveal style="--tilt:-2deg">
+        <div class="polaroid-photo"><img src="image7.jpeg" alt="A beautiful memory" loading="lazy"></div>
+        <figcaption>A beautiful memory ❤️</figcaption>
+      </figure>
+      <!-- Photo 8 -->
+      <figure class="polaroid" data-reveal style="--tilt:3deg">
+        <div class="polaroid-photo"><img src="image8.jpeg" alt="A beautiful memory" loading="lazy"></div>
         <figcaption>A beautiful memory ❤️</figcaption>
       </figure>
     </div>
@@ -447,12 +505,21 @@ button:focus-visible, input:focus-visible{ outline: 2px solid var(--rosegold-dee
 
   <section class="section song-section" id="song">
     <h2 class="section-title light" data-reveal>Our Song</h2>
+    
+    <div class="video-container" data-reveal>
+      <video id="song-video" playsinline preload="metadata">
+        <source src="song.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
     <div class="record-player" data-reveal>
       <div class="vinyl" id="vinyl">
         <div class="vinyl-label"><span>Mkissi ❤️</span></div>
       </div>
       <div class="tonearm" id="tonearm"></div>
     </div>
+
     <div class="player-controls" data-reveal>
       <button class="player-btn" id="play-btn" aria-label="Play">
         <svg id="play-icon" viewBox="0 0 24 24"><path d="M7 5v14l12-7z"/></svg>
@@ -783,6 +850,9 @@ function initGallery() {
   lightbox.addEventListener("click", () => lightbox.classList.remove("show"));
 }
 
+// ============================================================
+// RECORD PLAYER WITH MP4 VIDEO
+// ============================================================
 function initRecordPlayer() {
   const playBtn = $("#play-btn");
   const playIcon = $("#play-icon");
@@ -790,65 +860,61 @@ function initRecordPlayer() {
   const vinyl = $("#vinyl");
   const tonearm = $("#tonearm");
   const volumeSlider = $("#volume-slider");
+  const video = $("#song-video");
 
-  let audioCtx = null;
-  let masterGain = null;
-  let noteInterval = null;
   let playing = false;
 
-  const melody = [523.25, 587.33, 659.25, 587.33, 523.25, 493.88, 440, 493.88, 523.25];
-  let noteIndex = 0;
+  video.addEventListener('play', () => {
+    playing = true;
+    playIcon.style.display = "none";
+    pauseIcon.style.display = "block";
+    vinyl.classList.add("spinning");
+    tonearm.classList.add("playing");
+  });
 
-  function ensureAudio() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      masterGain = audioCtx.createGain();
-      masterGain.gain.value = volumeSlider.value / 100 * 0.25;
-      masterGain.connect(audioCtx.destination);
-    }
-  }
+  video.addEventListener('pause', () => {
+    playing = false;
+    playIcon.style.display = "block";
+    pauseIcon.style.display = "none";
+    vinyl.classList.remove("spinning");
+    tonearm.classList.remove("playing");
+  });
 
-  function playNote(freq) {
-    if (!audioCtx) return;
-    try {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = "sine";
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0, audioCtx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.1);
-      osc.connect(gain);
-      gain.connect(masterGain);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 1.2);
-    } catch (e) {}
-  }
-
-  function startMusic() {
-    ensureAudio();
-    if (audioCtx && audioCtx.state === "suspended") { audioCtx.resume().catch(() => {}); }
-    playNote(melody[noteIndex % melody.length]);
-    noteIndex++;
-    noteInterval = setInterval(() => {
-      playNote(melody[noteIndex % melody.length]);
-      noteIndex++;
-    }, 750);
-  }
-
-  function stopMusic() { clearInterval(noteInterval); noteInterval = null; }
+  video.addEventListener('ended', () => {
+    playing = false;
+    playIcon.style.display = "block";
+    pauseIcon.style.display = "none";
+    vinyl.classList.remove("spinning");
+    tonearm.classList.remove("playing");
+    video.currentTime = 0;
+  });
 
   playBtn.addEventListener("click", () => {
-    playing = !playing;
-    playIcon.style.display = playing ? "none" : "block";
-    pauseIcon.style.display = playing ? "block" : "none";
-    vinyl.classList.toggle("spinning", playing);
-    tonearm.classList.toggle("playing", playing);
-    if (playing) startMusic(); else stopMusic();
+    if (video.paused) {
+      video.play().catch(e => console.log("Playback failed:", e));
+    } else {
+      video.pause();
+    }
   });
 
   volumeSlider.addEventListener("input", () => {
-    if (masterGain) masterGain.gain.value = (volumeSlider.value / 100) * 0.25;
+    video.volume = volumeSlider.value / 100;
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === ' ' && e.target === document.body) {
+      e.preventDefault();
+      if (video.paused) {
+        video.play().catch(e => console.log("Playback failed:", e));
+      } else {
+        video.pause();
+      }
+    }
+  });
+
+  window.addEventListener('beforeunload', () => {
+    video.pause();
+    video.src = '';
   });
 }
 
